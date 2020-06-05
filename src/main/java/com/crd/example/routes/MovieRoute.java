@@ -2,9 +2,8 @@ package com.crd.example.routes;
 
 import java.util.List;
 
-import org.apache.camel.CamelContext;
+import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.impl.DefaultCamelContext;
 import org.springframework.stereotype.Component;
 
 import com.crd.example.model.Movie;
@@ -14,17 +13,16 @@ public class MovieRoute extends RouteBuilder {
 	
 	@Override
 	public void configure() throws Exception {
-		// TODO Auto-generated method stub
 		
+		from("direct:start")
+		.process(buildrRequestProcessor)
+		.to("jdbc:postgresql://localhost:5432/mydb2");
 	}
-	public List<Movie> findAll() throws Exception {
-		CamelContext camelContext = new DefaultCamelContext();
-		camelContext.addRoutes(new RouteBuilder() {
-			@Override
-			public void configure() throws Exception {
-				from("localhost:5432/mydb2" + "?get=true");}
-		});
-		return (List<Movie>) camelContext;
-		
-	}
+	final Processor buildrRequestProcessor = exchange -> {
+		String param = exchange.getIn().getHeader("name").toString();
+		log.info("title param = " + param);
+		String selectQuery = "SELECT * FROM movies WHERE name = " + param;
+		exchange.getIn().setBody(selectQuery);
+	};
+
 }
