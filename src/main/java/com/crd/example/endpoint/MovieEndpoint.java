@@ -23,15 +23,15 @@ public class MovieEndpoint extends RouteBuilder{
 
 	    from("direct:hello")
         	.log(LoggingLevel.INFO, "Hello World")
-           .transform().simple("Hello World");
+        	.transform().simple("Hello World");
 		
 		rest()
 			.path("/path")
 			.get("/movies")
 			.bindingMode(RestBindingMode.json)
 			.produces(ContentType.APPLICATION_JSON.getMimeType())
-			.param().name("title").type(RestParamType.query).dataType("String").endParam()
 			.param().name("id").type(RestParamType.query).dataType("int").endParam()
+			.param().name("title").type(RestParamType.query).dataType("String").endParam()
 			.param().name("about").type(RestParamType.query).dataType("String").endParam()
 			.outType(Movie.class)
 			.to("direct:start");

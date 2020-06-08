@@ -6,8 +6,9 @@ import org.springframework.context.annotation.ComponentScan;
 
 
 @SpringBootApplication
+@ComponentScan
 //@ComponentScan(basePackages = "com.crd.example.endpoint")
-@ComponentScan(basePackages = "com.crd.example.routes")
+//@ComponentScan(basePackages = "com.crd.example.routes")
 public class ExampleApplication {
 
 	public static void main(String[] args) {

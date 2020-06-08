@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-public class MovieRoute extends RouteBuilder {
+public class RouteToDB extends RouteBuilder {
 
 	@Autowired
 	DataSource dataSource;
@@ -21,8 +21,11 @@ public class MovieRoute extends RouteBuilder {
 	@Override
 	public void configure() throws Exception {
 
-		from("direct:start").process(buildRequestProcessor).to("jdbc:dataSource").log("body = ${body}")
-				.process(buildResponseProcessor);
+		from("direct:start")
+		.process(buildRequestProcessor)
+		.to("jdbc:dataSource").log("body = ${body}");
+//		.process(buildResponseProcessor);
+		from("direct:post").process(exchange -> exchange.getIn().setBody("Hello"));
 	}
 
 	Processor buildResponseProcessor = exchange -> {
