@@ -9,7 +9,7 @@ public class Movie {
 	private int id;
 	
 	@SuppressWarnings("unused")
-	private String name;
+	private String title;
 	
 	@SuppressWarnings("unused")
 	private String about;

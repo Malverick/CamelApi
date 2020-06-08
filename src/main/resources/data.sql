@@ -1,0 +1,1 @@
+INSERT INTO movies (title, about) VALUES ("shrek", "an ogre, a swamp, a donkey");
