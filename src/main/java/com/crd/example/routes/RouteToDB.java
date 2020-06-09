@@ -20,24 +20,37 @@ public class RouteToDB extends RouteBuilder {
 
 	@Override
 	public void configure() throws Exception {
-
+		//get start
 		from("direct:start")
 		.process(buildRequestProcessor)
-		.to("jdbc:dataSource").log("body = ${body}");
-//		.process(buildResponseProcessor);
-		from("direct:post").process(exchange -> exchange.getIn().setBody("Hello"));
-	}
-
-	Processor buildResponseProcessor = exchange -> {
-		Movie movie = exchange.getIn().getBody(Movie.class);
-		log.info(movie.toString());
-		exchange.getIn().setBody(movie);
+		.to("jdbc:dataSource").log("body = ${body}")
+		.process(buildResponseProcessor);
+//		from("direct:post").process(exchange -> exchange.getIn().setBody("Hello"));
+		
+		//post start
+		from("direct:postMovie")
+		.process(buildRequestProcessor)
+		.to("jdbc:dataSource").log("body = ${body}")
+		.process(buildCreateProcessor);
+		}
+	
+	//post
+		Processor buildCreateProcessor = exchange -> {
+			Movie movie = exchange.getIn().getBody(Movie.class);
+			log.info(movie.toString());
+			exchange.getIn().setBody(movie);
 	};
-	final Processor buildRequestProcessor = exchange -> {
-		String param = exchange.getIn().getHeader("name").toString();
-		log.info("title param = " + param);
-		String selectQuery = "SELECT * FROM movies WHERE title = " + param;
-		exchange.getIn().setBody(selectQuery);
+	//get
+		Processor buildResponseProcessor = exchange -> {
+			Movie movie = exchange.getIn().getBody(Movie.class);
+			log.info(movie.toString());
+			exchange.getIn().setBody(movie);
+	};
+		final Processor buildRequestProcessor = exchange -> {
+			String param = exchange.getIn().getHeader("name").toString();
+			log.info("title param = " + param);
+			String selectQuery = "SELECT * FROM movies WHERE title = " + param;
+			exchange.getIn().setBody(selectQuery);
 	};
 
 }
