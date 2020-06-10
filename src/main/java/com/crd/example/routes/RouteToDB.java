@@ -49,7 +49,7 @@ public class RouteToDB extends RouteBuilder {
 		final Processor buildRequestProcessor = exchange -> {
 			String param = exchange.getIn().getHeader("title").toString();
 			log.info("title param = " + param);
-			String selectQuery = "SELECT * FROM movies WHERE title = " + param;
+			String selectQuery = "SELECT * FROM movies WHERE \"Title\" = " + "'" +param +"'";
 			exchange.getIn().setBody(selectQuery);
 	};
 

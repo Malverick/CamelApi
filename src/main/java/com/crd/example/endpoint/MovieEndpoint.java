@@ -26,7 +26,7 @@ public class MovieEndpoint extends RouteBuilder{
         	.transform().simple("Hello World");
 		
 		rest()
-			.path("/getAll")
+			.path("/get")
 			.get("/movies")
 			.bindingMode(RestBindingMode.json)
 			.produces(ContentType.APPLICATION_JSON.getMimeType())
