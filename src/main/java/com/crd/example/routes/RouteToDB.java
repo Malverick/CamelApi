@@ -24,22 +24,22 @@ public class RouteToDB extends RouteBuilder {
 		from("direct:start")
 		.process(buildRequestProcessor)
 		.to("jdbc:dataSource").log("body = ${body}")
-		.process(buildResponseProcessor);
+		.process(buildResponseProcessor);};
 //		from("direct:post").process(exchange -> exchange.getIn().setBody("Hello"));
 		
-		//post start
-		from("direct:postMovie")
-		.process(buildRequestProcessor)
-		.to("jdbc:dataSource").log("body = ${body}")
-		.process(buildCreateProcessor);
-		}
+//		//post start
+//		from("direct:postMovie")
+//		.process(buildRequestProcessor)
+//		.to("jdbc:dataSource").log("body = ${body}")
+//		.process(buildCreateProcessor);
+//		}
 	
-	//post
-		Processor buildCreateProcessor = exchange -> {
-			Movie movie = exchange.getIn().getBody(Movie.class);
-			log.info(movie.toString());
-			exchange.getIn().setBody(movie);
-	};
+//	//post
+//		Processor buildCreateProcessor = exchange -> {
+//			Movie movie = exchange.getIn().getBody(Movie.class);
+//			log.info(movie.toString());
+//			exchange.getIn().setBody(movie);
+//	};
 	//get
 		Processor buildResponseProcessor = exchange -> {
 			Movie movie = exchange.getIn().getBody(Movie.class);

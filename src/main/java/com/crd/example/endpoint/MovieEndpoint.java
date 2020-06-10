@@ -36,26 +36,15 @@ public class MovieEndpoint extends RouteBuilder{
 			.outType(Movie.class)
 			.to("direct:start");
 		
-		rest()
-			.path("/getById")
-			.get("/movieans")
-			.bindingMode(RestBindingMode.json)
-			.produces(ContentType.APPLICATION_JSON.getMimeType())
-			.param().name("title").type(RestParamType.query).dataType("string").endParam()
-			.param().name("about").type(RestParamType.query).dataType("String").endParam()
-			.param().name("id").type(RestParamType.query).dataType("int").endParam()
-			.outType(Movie.class)
-			.to("direct:getById");
-		
-		rest()
-			.path("/post")
-			.post("/movies")
-			.bindingMode(RestBindingMode.json)
-			.produces(ContentType.APPLICATION_JSON.getMimeType())
-			.param().name("title").type(RestParamType.query).dataType("string").endParam()
-			.param().name("about").type(RestParamType.query).dataType("String").endParam()
-			.param().name("id").type(RestParamType.query).dataType("int").endParam()
-			.outType(Movie.class)
-			.to("direct:postMovie");
+//		rest()
+//			.path("/post")
+//			.post("/movies")
+//			.bindingMode(RestBindingMode.json)
+//			.produces(ContentType.APPLICATION_JSON.getMimeType())
+//			.param().name("title").type(RestParamType.query).dataType("string").endParam()
+//			.param().name("about").type(RestParamType.query).dataType("String").endParam()
+//			.param().name("id").type(RestParamType.query).dataType("int").endParam()
+//			.outType(Movie.class)
+//			.to("direct:postMovie");
 	}
 }
