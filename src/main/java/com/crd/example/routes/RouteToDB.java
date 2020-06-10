@@ -43,7 +43,7 @@ public class RouteToDB extends RouteBuilder {
 	//get
 		Processor buildResponseProcessor = exchange -> {
 			Movie movie = exchange.getIn().getBody(Movie.class);
-			log.info(movie.toString());
+//			log.info(movie.toString());
 			exchange.getIn().setBody(movie);
 	};
 		final Processor buildRequestProcessor = exchange -> {
