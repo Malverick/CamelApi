@@ -23,8 +23,8 @@ public class RouteToDB extends RouteBuilder {
 		//get start
 		from("direct:start")
 		.process(buildRequestProcessor)
-		.to("jdbc:dataSource").log("body = ${body}")
-		.process(buildResponseProcessor);};
+		.to("jdbc:dataSource").log("body = ${body}");};
+//		.process(buildResponseProcessor);};
 //		from("direct:post").process(exchange -> exchange.getIn().setBody("Hello"));
 		
 //		//post start
@@ -43,7 +43,7 @@ public class RouteToDB extends RouteBuilder {
 	//get
 		Processor buildResponseProcessor = exchange -> {
 			Movie movie = exchange.getIn().getBody(Movie.class);
-//			log.info(movie.toString());
+			log.info(movie.toString());
 			exchange.getIn().setBody(movie);
 	};
 		final Processor buildRequestProcessor = exchange -> {
