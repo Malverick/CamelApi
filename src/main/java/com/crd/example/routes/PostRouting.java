@@ -7,6 +7,8 @@ import org.apache.camel.builder.RouteBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.crd.example.model.Movie;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Component
@@ -24,11 +26,10 @@ public class PostRouting extends RouteBuilder {
 		.to("jdbc:dataSource").log("body = ${body}");};
 
 		final Processor buildRequestProcessor = exchange -> {
-			String param1 = exchange.getIn().getHeader("title").toString();
-			String param2 = exchange.getIn().getHeader("about").toString();
-			log.info("title param = " + param1);
-			log.info("about param = " + param2);
-			String insertQuery = "INSERT INTO movies (title, about) VALUES(" + "'" + param1 + "', '" + param2 + "');";
+			Movie movie = exchange.getIn().getBody(Movie.class);
+			log.info("title param = " + movie.getTitle());
+			log.info("about param = " + movie.getAbout());
+			String insertQuery = "INSERT INTO movies (\"Title\", \"About\") VALUES(" + "'" + movie.getTitle() + "', '" + movie.getAbout() + "');";
 			exchange.getIn().setBody(insertQuery);
 	};
 
