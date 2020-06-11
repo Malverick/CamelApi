@@ -46,9 +46,9 @@ public class MovieEndpoint extends RouteBuilder{
 			.type(Movie.class)
 			.bindingMode(RestBindingMode.json)
 			.produces(ContentType.APPLICATION_JSON.getMimeType())
+			.param().name("id").type(RestParamType.query).dataType("int").endParam()
 			.param().name("title").type(RestParamType.query).dataType("string").endParam()
 			.param().name("about").type(RestParamType.query).dataType("String").endParam()
-			.param().name("id").type(RestParamType.query).dataType("int").endParam()
 			.outType(Movie.class)
 			.to("direct:post");
 	}

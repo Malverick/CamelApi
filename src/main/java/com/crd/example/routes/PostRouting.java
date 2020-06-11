@@ -13,7 +13,7 @@ public class PostRouting extends RouteBuilder {
 
 	@Override
 	public void configure() throws Exception {
-		//get start
+		//Post start
 		from("direct:post")
 		.process(buildRequestProcessor)
 		.to("jdbc:dataSource").log("body = ${body}");};
