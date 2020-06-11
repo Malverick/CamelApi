@@ -7,6 +7,7 @@ import lombok.Data;
 
 @Data
 public class Movie {
+	
 	@SuppressWarnings("all")
 	public Movie() {
 		this.title = title;
