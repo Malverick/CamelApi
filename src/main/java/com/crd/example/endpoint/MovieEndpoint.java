@@ -8,12 +8,16 @@ import org.apache.camel.model.rest.RestParamType;
 import org.springframework.stereotype.Component;
 
 import com.crd.example.model.Movie;
+//import com.fasterxml.jackson.databind.DeserializationFeature;
+//import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
 public class MovieEndpoint extends RouteBuilder{
 	
 	@Override
 	public void configure() throws Exception {
+//		ObjectMapper objectMapper = new ObjectMapper();
+//		objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 		restConfiguration()
 			.component("servlet");
 		
@@ -34,17 +38,18 @@ public class MovieEndpoint extends RouteBuilder{
 			.param().name("title").type(RestParamType.query).dataType("String").endParam()
 			.param().name("about").type(RestParamType.query).dataType("String").endParam()
 			.outType(Movie.class)
-			.to("direct:start");
+			.to("direct:get");
 		
-//		rest()
-//			.path("/post")
-//			.post("/movies")
-//			.bindingMode(RestBindingMode.json)
-//			.produces(ContentType.APPLICATION_JSON.getMimeType())
-//			.param().name("title").type(RestParamType.query).dataType("string").endParam()
-//			.param().name("about").type(RestParamType.query).dataType("String").endParam()
-//			.param().name("id").type(RestParamType.query).dataType("int").endParam()
-//			.outType(Movie.class)
-//			.to("direct:postMovie");
+		rest()
+			.path("/post")
+			.post("/movies")
+			.type(Movie.class)
+			.bindingMode(RestBindingMode.json)
+			.produces(ContentType.APPLICATION_JSON.getMimeType())
+			.param().name("title").type(RestParamType.query).dataType("string").endParam()
+			.param().name("about").type(RestParamType.query).dataType("String").endParam()
+			.param().name("id").type(RestParamType.query).dataType("int").endParam()
+			.outType(Movie.class)
+			.to("direct:post");
 	}
 }

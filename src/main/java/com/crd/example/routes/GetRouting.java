@@ -7,13 +7,11 @@ import org.apache.camel.builder.RouteBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.crd.example.model.Movie;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-public class RouteToDB extends RouteBuilder {
+public class GetRouting extends RouteBuilder {
 
 	@Autowired
 	DataSource dataSource;
@@ -21,31 +19,10 @@ public class RouteToDB extends RouteBuilder {
 	@Override
 	public void configure() throws Exception {
 		//get start
-		from("direct:start")
+		from("direct:get")
 		.process(buildRequestProcessor)
 		.to("jdbc:dataSource").log("body = ${body}");};
-//		.process(buildResponseProcessor);};
-//		from("direct:post").process(exchange -> exchange.getIn().setBody("Hello"));
-		
-//		//post start
-//		from("direct:postMovie")
-//		.process(buildRequestProcessor)
-//		.to("jdbc:dataSource").log("body = ${body}")
-//		.process(buildCreateProcessor);
-//		}
-	
-//	//post
-//		Processor buildCreateProcessor = exchange -> {
-//			Movie movie = exchange.getIn().getBody(Movie.class);
-//			log.info(movie.toString());
-//			exchange.getIn().setBody(movie);
-//	};
-	//get
-		Processor buildResponseProcessor = exchange -> {
-			Movie movie = exchange.getIn().getBody(Movie.class);
-			log.info(movie.toString());
-			exchange.getIn().setBody(movie);
-	};
+
 		final Processor buildRequestProcessor = exchange -> {
 			String param = exchange.getIn().getHeader("title").toString();
 			log.info("title param = " + param);
