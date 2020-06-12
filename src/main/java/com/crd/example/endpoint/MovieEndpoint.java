@@ -47,12 +47,23 @@ public class MovieEndpoint extends RouteBuilder{
 		
 		rest()
 			.path("/delete")
-			.post("/movies")
+			.delete("/movies")
 			.produces(ContentType.APPLICATION_JSON.getMimeType())
 			.param().name("id").type(RestParamType.query).dataType("int").endParam()
 			.param().name("title").type(RestParamType.query).dataType("String").endParam()
 			.param().name("about").type(RestParamType.query).dataType("String").endParam()
 			.outType(Movie.class)
 			.to("direct:delete");
+		
+		rest()
+			.path("/update")
+			.put("/movies")
+			.type(Movie.class)
+			.param().name("id").type(RestParamType.query).dataType("int").endParam()
+			.param().name("title").type(RestParamType.query).dataType("String").endParam()
+			.param().name("about").type(RestParamType.query).dataType("String").endParam()
+			.produces(ContentType.APPLICATION_JSON.getMimeType())
+			.outType(Movie.class)
+			.to("direct:update");
 	}
 }
