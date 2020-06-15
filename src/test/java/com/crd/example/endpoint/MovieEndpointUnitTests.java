@@ -15,23 +15,25 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.apache.camel.Exchange;
+import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class MovieEndpointUnitTests extends CamelTestSupport  {
-	
+public class MovieEndpointUnitTests extends CamelTestSupport {
+
 	@InjectMocks
 	MovieEndpoint movieEndpoint;
-	
+
 	@Mock
 	GetRouting getRouting;
 	DeleteRoutes deleteRouting;
 	PostRouting postRouting;
 	UpdateRoutes updateRouting;
-	
+
 	@Test
-	public void getMovieTest() {
-		movieEndpoint
+	public void getMovieTest()  {
+		
 	}
 }
