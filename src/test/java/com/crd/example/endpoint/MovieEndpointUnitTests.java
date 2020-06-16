@@ -1,9 +1,9 @@
 package com.crd.example.endpoint;
 
-import com.crd.example.routes.DeleteRoutes;
+import com.crd.example.routes.DeleteRouting;
 import com.crd.example.routes.GetRouting;
 import com.crd.example.routes.PostRouting;
-import com.crd.example.routes.UpdateRoutes;
+import com.crd.example.routes.UpdateRouting;
 import com.crd.example.model.Movie;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,9 +28,9 @@ public class MovieEndpointUnitTests extends CamelTestSupport {
 
 	@Mock
 	GetRouting getRouting;
-	DeleteRoutes deleteRouting;
+	DeleteRouting deleteRouting;
 	PostRouting postRouting;
-	UpdateRoutes updateRouting;
+	UpdateRouting updateRouting;
 
 	@Test
 	public void getMovieTest()  {

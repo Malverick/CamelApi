@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-public class DeleteRoutes extends RouteBuilder {
+public class DeleteRouting extends RouteBuilder {
 
 	@Autowired
 	DataSource dataSource;

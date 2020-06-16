@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import com.crd.example.model.Movie;
 
 @Component
-public class UpdateRoutes  extends RouteBuilder {
+public class UpdateRouting  extends RouteBuilder {
 
 	@Autowired
 	DataSource dataSource;

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.crd.example.routes.DeleteRoutes;
+import com.crd.example.routes.DeleteRouting;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 public class DeleteRoutingSmokeTest {
 	@Autowired
-	public DeleteRoutes deleteRouting;
+	public DeleteRouting deleteRouting;
 
 	@Test
 	public void exampleApplicationAPIApplicationSmokeTest() {
