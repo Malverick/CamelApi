@@ -1,10 +1,11 @@
 package com.crd.example.endpoint;
 
-import com.crd.example.routes.DeleteRouting;
-import com.crd.example.routes.GetRouting;
-import com.crd.example.routes.PostRouting;
-import com.crd.example.routes.UpdateRouting;
 import com.crd.example.model.Movie;
+import com.crd.example.routes.movies.DeleteRouting;
+import com.crd.example.routes.movies.GetRouting;
+import com.crd.example.routes.movies.PostRouting;
+import com.crd.example.routes.movies.UpdateRouting;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

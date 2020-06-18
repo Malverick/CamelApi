@@ -1,4 +1,4 @@
-package com.crd.example.routes;
+package com.crd.example.routes.movies;
 
 import javax.sql.DataSource;
 
@@ -11,22 +11,23 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-public class GetRouting extends RouteBuilder {
+public class DeleteRouting extends RouteBuilder {
 
 	@Autowired
 	DataSource dataSource;
 
 	@Override
 	public void configure() throws Exception {
-		//get start
-		from("direct:get")
+		//delete start
+		from("direct:delete")
 		.process(buildRequestProcessor)
 		.to("jdbc:dataSource").log("body = ${body}");};
-
+		
+		
 		final Processor buildRequestProcessor = exchange -> {
 			String param = exchange.getIn().getHeader("title").toString();
 			log.info("title param = " + param);
-			String selectQuery = "SELECT * FROM movies WHERE \"Title\" = " + "'" +param +"';";
-			exchange.getIn().setBody(selectQuery);
+			String deleteQuery = "DELETE FROM movies WHERE \"Title\" = " + "'" +param +"';";
+			exchange.getIn().setBody(deleteQuery);
 	};
 }

@@ -7,6 +7,7 @@ import org.apache.camel.model.rest.RestBindingMode;
 import org.apache.camel.model.rest.RestParamType;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import com.crd.example.model.Movie;
 
 
@@ -36,6 +37,13 @@ public class MovieEndpoint extends RouteBuilder{
 			.param().name("about").type(RestParamType.query).dataType("String").endParam()
 			.outType(Movie.class)
 			.to("direct:get");
+		
+		rest()
+			.path("/get")
+			.get("/all")
+			.produces(ContentType.APPLICATION_JSON.getMimeType())
+			.outType(List.class)
+			.to("direct:getall");
 		
 		rest()
 			.path("/post")

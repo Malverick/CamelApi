@@ -1,4 +1,4 @@
-package com.crd.example.routes;
+package com.crd.example.routes.movies;
 
 import javax.sql.DataSource;
 
