@@ -25,5 +25,4 @@ public class GetRouting extends RouteBuilder{
 			String selectQuery = "SELECT * FROM shows WHERE \"Title\" = " + "'" +param +"';";
 			exchange.getIn().setBody(selectQuery);
 	};
-
 }

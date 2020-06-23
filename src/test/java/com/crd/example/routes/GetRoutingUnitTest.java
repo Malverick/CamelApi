@@ -21,9 +21,28 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.BootstrapWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
+import org.apache.camel.CamelContext;
+import org.apache.camel.EndpointInject;
+import org.apache.camel.Exchange;
+import org.apache.camel.builder.AdviceWithRouteBuilder;
+import org.apache.camel.builder.NotifyBuilder;
+import org.apache.camel.component.mock.MockEndpoint;
+import org.apache.camel.test.spring.CamelSpringBootRunner;
+import org.apache.camel.test.spring.DisableJmx;
+import org.apache.camel.test.spring.EnableRouteCoverage;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.SpringBootTest;
 
-//@RunWith(CamelSpringBootRunner.class)
-//@SpringBootTest(classes = org.agyei.richard.camelspringtest.CamelSpringTestApplication.class)
+import java.util.concurrent.TimeUnit;
+
+import static org.junit.Assert.assertTrue;
+
+@RunWith(CamelSpringBootRunner.class)
+@SpringBootTest(classes = com.crd.example.ExampleApplicationTests.class)
 @EnableRouteCoverage
 @DisableJmx
 public class GetRoutingUnitTest extends AbstractJUnit4SpringContextTests {

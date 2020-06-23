@@ -21,5 +21,4 @@ public class GetAllRouting extends RouteBuilder {
 			String selectQuery = "SELECT * FROM shows;";
 			exchange.getIn().setBody(selectQuery);
 	};
-
 }
