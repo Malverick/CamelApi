@@ -9,6 +9,7 @@ import org.apache.camel.test.spring.CamelSpringDelegatingTestContextLoader;
 import org.apache.camel.test.spring.CamelSpringJUnit4ClassRunner;
 import org.apache.camel.test.spring.CamelTestContextBootstrapper;
 import org.apache.camel.test.spring.DisableJmx;
+import org.apache.camel.test.spring.EnableRouteCoverage;
 import org.apache.camel.test.spring.MockEndpoints;
 import org.apache.catalina.startup.ContextConfig;
 import org.junit.Test;
@@ -21,9 +22,10 @@ import org.springframework.test.context.BootstrapWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
-@SuppressWarnings("deprecation")
-@RunWith(CamelSpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { ContextConfig.class }, loader = CamelSpringDelegatingTestContextLoader.class)
+//@RunWith(CamelSpringBootRunner.class)
+//@SpringBootTest(classes = org.agyei.richard.camelspringtest.CamelSpringTestApplication.class)
+@EnableRouteCoverage
+@DisableJmx
 public class GetRoutingUnitTest extends AbstractJUnit4SpringContextTests {
 
 	@EndpointInject("mock:get")
@@ -44,7 +46,6 @@ public class GetRoutingUnitTest extends AbstractJUnit4SpringContextTests {
 				"]";
 				resultEndpoint.expectedBodiesReceived(expectedBody);
 				template.sendBodyAndHeader(expectedBody, "Shrek", "Shrek");
-				
 				resultEndpoint.assertIsSatisfied();
 	}
 	
