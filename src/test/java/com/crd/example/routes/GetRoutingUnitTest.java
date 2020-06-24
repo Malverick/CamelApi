@@ -5,8 +5,6 @@ import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.test.spring.CamelSpringDelegatingTestContextLoader;
-import org.apache.camel.test.spring.CamelSpringJUnit4ClassRunner;
 import org.apache.camel.test.spring.CamelTestContextBootstrapper;
 import org.apache.camel.test.spring.DisableJmx;
 import org.apache.camel.test.spring.EnableRouteCoverage;
@@ -22,20 +20,13 @@ import org.springframework.test.context.BootstrapWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.apache.camel.CamelContext;
-import org.apache.camel.EndpointInject;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.AdviceWithRouteBuilder;
 import org.apache.camel.builder.NotifyBuilder;
-import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.spring.CamelSpringBootRunner;
-import org.apache.camel.test.spring.DisableJmx;
-import org.apache.camel.test.spring.EnableRouteCoverage;
 import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.concurrent.TimeUnit;
 
@@ -45,38 +36,43 @@ import static org.junit.Assert.assertTrue;
 @SpringBootTest(classes = com.crd.example.ExampleApplicationTests.class)
 @EnableRouteCoverage
 @DisableJmx
-public class GetRoutingUnitTest extends AbstractJUnit4SpringContextTests {
+public class GetRoutingUnitTest {
+	@Autowired
+	private CamelContext camelContext;
 
-	@EndpointInject("mock:get")
-	protected MockEndpoint resultEndpoint;
+	@EndpointInject(uri = "mock:log:foo")
+	private MockEndpoint mock;
 
-	@Produce("direct:get")
-	protected ProducerTemplate template;
+	@EndpointInject(uri = "mock:mocked-endpoint")
+	private MockEndpoint mockRequestEndpoint;
 
-	@DirtiesContext
+	@Value("${json.placeholder.base.url}")
+	private String jsonPlaceHolderString;
+
+	@Before
+	public void mockEndpoints() throws Exception {
+		AdviceWithRouteBuilder mocklSolr = new AdviceWithRouteBuilder() {
+			@Override
+			public void configure() throws Exception {
+				weaveAddLast().to("mock:log:foo");
+				interceptSendToEndpoint(String.format("http4:%s/posts*", jsonPlaceHolderString))
+				.when(header(Exchange.HTTP_PATH).isEqualTo("1"))
+				.process(exchange -> System.out.println("Intercepted ROute endpoint"))
+				.skipSendToOriginalEndpoint()
+				.to("mock:mocked-endpoint");
+			}
+		
+		};
+		mockRequestEndpoint.whenAnyExchangeReceived(exchange -> {
+			exchange.getIn().setBody("Hello, World.");
+		});
+		camelContext.getRouteDefinition(PostRequestRoute.ROUTE_ID).adviceWith(camelContext, mockSolr);
+}
 	@Test
-	public void getRoutingTest() throws Exception {
-		String expectedBody= "[\r\n" + 
-				"    {\r\n" + 
-				"        \"Id\": 1,\r\n" + 
-				"        \"Title\": \"Shrek\",\r\n" + 
-				"        \"About\": \"stuff\\n\"\r\n" + 
-				"    }\r\n" + 
-				"]";
-				resultEndpoint.expectedBodiesReceived(expectedBody);
-				template.sendBodyAndHeader(expectedBody, "Shrek", "Shrek");
-				resultEndpoint.assertIsSatisfied();
+	public void shouldSayFoo() throws Exception {
+		mock.expectedBodiesReceived("Hello, World.");
+		NotifyBuilder notify = new NotifyBuilder(camelContext).whenDone(1).create();
+        assertTrue(notify.matches(10, TimeUnit.SECONDS));
+        mock.assertIsSatisfied();
 	}
-	
-    @Configuration
-    public static class ContextConfig {
-        @Bean
-        public RouteBuilder route() {
-            return new RouteBuilder() {
-                public void configure() {
-                    from("direct:start").filter(header("Shrek").isEqualTo("Shrek")).to("mock:get");
-                }
-            };
-        }
-    }
 }
