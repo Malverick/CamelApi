@@ -8,23 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DeleteRouting extends RouteBuilder {
-
-	@Autowired
-	DataSource dataSource;
-
-	@Override
+public class GetAllRoutingS extends RouteBuilder {
+	
+	@Autowired DataSource dataSource;
+	
 	public void configure() throws Exception {
-		//delete start
-		from("direct:deletes")
+		from("direct:getalls")
 		.process(buildRequestProcessor)
 		.to("jdbc:dataSource").log("body = ${body}");};
-		
-		
+
 		final Processor buildRequestProcessor = exchange -> {
-			String param = exchange.getIn().getHeader("title").toString();
-			log.info("title param = " + param);
-			String deleteQuery = "DELETE FROM shows WHERE \"Title\" = " + "'" +param +"';";
-			exchange.getIn().setBody(deleteQuery);
+			String selectQuery = "SELECT * FROM shows;";
+			exchange.getIn().setBody(selectQuery);
 	};
 }

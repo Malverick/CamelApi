@@ -10,14 +10,14 @@ import org.springframework.stereotype.Component;
 import com.crd.example.model.Show;
 
 @Component
-public class UpdateRouting extends RouteBuilder{
+public class UpdateRoutingS extends RouteBuilder{
 
 	@Autowired DataSource dataSource;
 	
 	@Override
 	public void configure() throws Exception {
 		//update start
-		from("direct:update")
+		from("direct:updates")
 		.process(buildRequestProcessor)
 		.to("jdbc:dataSource").log("body = ${body}");};
 		

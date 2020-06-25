@@ -54,7 +54,7 @@ public class ShowEndpoint extends RouteBuilder{
 			.param().name("about").type(RestParamType.query).dataType("String").endParam()
 			.param().name("episodes").type(RestParamType.query).dataType("int").endParam()
 			.outType(Show.class)
-			.to("direct.deletes");
+			.to("direct:deletes");
 		
 		rest()
 			.path("/shows")
