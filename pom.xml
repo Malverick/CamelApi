@@ -85,7 +85,7 @@
 			<scope>compile</scope>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-core</artifactId>
-			<version>3.3.0</version>
+			<version>3.21.4</version>
 		</dependency>
 		<dependency>
 			<scope>compile</scope>
